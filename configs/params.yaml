@@ -1,0 +1,162 @@
+# Configuration file for Student Performance Data Mining Project
+
+# Random seed for reproducibility
+random_seed: 42
+
+# Data paths
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  math_file: "student-mat.csv"
+  portuguese_file: "student-por.csv"
+  
+# Output paths
+output:
+  figures_dir: "outputs/figures"
+  tables_dir: "outputs/tables"
+  models_dir: "outputs/models"
+  reports_dir: "outputs/reports"
+
+# Data preprocessing
+preprocessing:
+  # Target definition: G3 >= pass_threshold -> pass, else fail
+  pass_threshold: 10
+  
+  # Handle missing values
+  missing_strategy: "mean"  # mean, median, mode, drop
+  
+  # Outlier detection
+  outlier_method: "iqr"  # iqr, zscore, isolation_forest
+  outlier_threshold: 3
+  
+  # Feature encoding
+  encoding:
+    binary_features: ["school", "sex", "address", "famsize", "Pstatus", 
+                      "schoolsup", "famsup", "paid", "activities", 
+                      "nursery", "higher", "internet", "romantic"]
+    ordinal_features: ["Medu", "Fedu", "traveltime", "studytime", "failures",
+                       "famrel", "freetime", "goout", "Dalc", "Walc", "health"]
+    nominal_features: ["Mjob", "Fjob", "reason", "guardian"]
+  
+  # Scaling
+  scaling_method: "standard"  # standard, minmax, robust
+
+# Feature engineering
+features:
+  # Behavioral features
+  create_behavioral_bins: true
+  behavioral_features:
+    - "studytime"
+    - "failures"
+    - "absences"
+    - "goout"
+    - "Dalc"
+    - "Walc"
+  
+  # Aggregate features
+  create_aggregates: true
+  aggregates:
+    - name: "parent_edu"
+      formula: "(Medu + Fedu) / 2"
+    - name: "alcohol_total"
+      formula: "Dalc + Walc"
+    - name: "support_total"
+      formula: "schoolsup + famsup + paid"
+  
+  # Drop G1, G2 to avoid data leakage (optional)
+  drop_grade_features: false  # Set to true to avoid leakage
+
+# Train-test split
+split:
+  test_size: 0.2
+  validation_size: 0.2  # from training set
+  stratify: true
+
+# Association Rules Mining
+association:
+  min_support: 0.05
+  min_confidence: 0.6
+  min_lift: 1.2
+  max_length: 4
+  
+# Clustering
+clustering:
+  methods: ["kmeans", "hierarchical"]
+  kmeans:
+    n_clusters_range: [2, 3, 4, 5, 6, 7, 8]
+    n_init: 10
+    max_iter: 300
+  
+  hierarchical:
+    n_clusters_range: [2, 3, 4, 5, 6]
+    linkage: "ward"
+    
+
+
+# Classification models
+classification:
+  models:
+    - "logistic_regression"
+    - "decision_tree"
+    - "random_forest"
+  
+  # Hyperparameters
+  logistic_regression:
+    C: [0.01, 0.1, 1, 10]
+    max_iter: 1000
+  
+  decision_tree:
+    max_depth: [3, 5, 7, 10, null]
+    min_samples_split: [2, 5, 10]
+  
+  random_forest:
+    n_estimators: [50, 100, 200]
+    max_depth: [5, 10, 15, null]
+    min_samples_split: [2, 5]
+  
+
+
+# Semi-supervised learning
+semi_supervised:
+  # Percentage of labeled data to keep
+  labeled_percentages: [5, 10, 20, 30, 50]
+  
+  methods:
+    - "self_training"
+    - "label_spreading"
+  
+  self_training:
+    threshold: 0.75
+    max_iter: 10
+  
+
+
+# Evaluation metrics
+evaluation:
+  classification_metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+    - "f1"
+    - "roc_auc"
+    - "pr_auc"
+  
+  clustering_metrics:
+    - "silhouette"
+    - "davies_bouldin"
+    - "calinski_harabasz"
+  
+  # Cross-validation
+  cv_folds: 5
+  
+  # Class imbalance handling
+  handle_imbalance: true
+  imbalance_method: "smote"  # smote, adasyn, random_oversample, random_undersample
+
+# Visualization
+visualization:
+  figure_size: [10, 6]
+  dpi: 300
+  style: "seaborn-v0_8-darkgrid"
+  color_palette: "Set2"
+  save_format: "png"
