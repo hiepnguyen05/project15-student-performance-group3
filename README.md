@@ -198,7 +198,7 @@ Chạy lần lượt `01` → `05` để theo đúng pipeline trên lớp.
 - **Feature Engineering**: Tạo thêm các đặc trưng hành vi tổng hợp và phân nhóm (bins) để phục vụ luật kết hợp và phân tích.  
 
 ### 8. Thông tin học phần  
-- **Giảng viên hướng dẫn**: ThS. Lê Thị Thùy Trang  
+- **Giảng viên hướng dẫn**: ThS. Nguyễn Ngọc Ân
 - **Học phần**: Dữ liệu lớn, Khai phá dữ liệu / Khai phá dữ liệu  
 - **Học kỳ**: Học kỳ II năm học 2025–2026  
 
