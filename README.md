@@ -123,7 +123,7 @@ python scripts/run_semi_supervised.py
 Kết quả:  
 - Bảng `semi_supervised_comparison.csv` và file cải thiện F1 theo % nhãn trong `outputs/tables/`.  
 
-#### 5.3. Chạy web demo (điểm thưởng GUI – Streamlit)  
+#### 5.3. Chạy web demo 
 
 Ứng dụng web nhỏ để nhập thông tin sinh viên, dự đoán Pass/Fail và khám phá cụm sinh viên:  
 
